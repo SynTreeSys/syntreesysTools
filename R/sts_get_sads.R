@@ -35,9 +35,18 @@ sts_get_sads <- function(x,
                      abund.metric = "countsMeasurement",
                      strata.names = NULL) {
   
-  ids2keep <- x$individuals >= minN & x$sizeCutoffMin >= minCutOff
-  plot2keep <- x$uniquePlotID[ids2keep]
-  x1 <- x[x$uniquePlotID %in% plot2keep,]
+  if (is.null(minCutOff) | minCutOff == 0) {
+    ids2keep <- x$individuals >= minN & 
+                  x$individuals < maxN
+    plot2keep <- x$uniquePlotID[ids2keep]
+    x1 <- x[x$uniquePlotID %in% plot2keep,]
+  } else {
+    ids2keep <- x$individuals >= minN & 
+                  x$individuals < maxN &  
+                    x$sizeCutoffMin >= minCutOff
+    plot2keep <- x$uniquePlotID[ids2keep]
+    x1 <- x[x$uniquePlotID %in% plot2keep,]
+  }
 
   if (remove.indet)
     x1 <- x1[x1$organismNameTaxonRank %in% "species", ]
