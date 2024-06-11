@@ -28,7 +28,10 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/print_msg.html</loc>
+    <loc>/reference/sts_get_metadata.html</loc>
+  </url>
+  <url>
+    <loc>/reference/sts_get_sads.html</loc>
   </url>
   <url>
     <loc>/reference/syntreesysTools-package.html</loc>
