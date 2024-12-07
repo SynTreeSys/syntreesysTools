@@ -7,6 +7,7 @@
 #' @param propDetMin numeric minimum proportion of fully determined individuals in a plot, used for filtering (default 80)
 #' @param Strat2keep vector listing all the strata to keep (default all the strata from 50mm DBH in database V6)
 #' @param EFG2keep EFG to keep (default the 9 EFG used for paper on diversity patterns)
+#' @param keepMorpho a boleean specifying if the morphospecies are kept (defaut is False)
 #'
 #' @return the rds file of the whole database after filtering 
 #' (only the SpeciesObservations, Plots and CommunityObservations) are updated.
@@ -42,7 +43,8 @@ filter_data <- function(nIndivMin = 50, # minimum number of trees in a plot to k
                                      "T1.3 Tropical/Subtropical montane rainforests",  
                                      "T4.2 Pyric tussock savannas",                                 
                                      "T2.4 Warm temperate laurophyll forests",                      
-                                     "T3.1 Seasonally dry tropical shrublands")) # the EFG to consider
+                                     "T3.1 Seasonally dry tropical shrublands"), # the EFG to consider
+                        keepMorpho = FALSE) # do we want to keep the morpho sp?
 {
   # Retreive spobs and plot data sets
   Data_SpObs <- as.data.table(Data$SpeciesObservations)
@@ -65,7 +67,9 @@ filter_data <- function(nIndivMin = 50, # minimum number of trees in a plot to k
   # length(unique(Data_SpObs$organismNameCurated))
   
   # filtering out the morpho-species 
-  Data_SpObs <- Data_SpObs[organismNameTaxonRank == "species"]
+  if (keepMorpho == FALSE) {
+    Data_SpObs <- Data_SpObs[organismNameTaxonRank == "species"]
+  }
   # length(unique(Data_SpObs$organismNameCurated)) 
   
   # filtering out the strata not in strata2keep
